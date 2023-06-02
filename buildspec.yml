@@ -9,10 +9,10 @@ phases:
     commands:
       - echo Building the Docker image...
       - export SEMVER_VERSION=$(date +'%Y.%m.%d')-$(printf %06d $CODEBUILD_BUILD_NUMBER)
-      - docker build -t hellotest:${SEMVER_VERSION} ./images
-      - docker tag hellotest:${SEMVER_VERSION} 742231939429.dkr.ecr.us-east-1.amazonaws.com/test-repo:${SEMVER_VERSION}
+      - docker build -t test-repo ./images
+      - docker tag test-repo:latest 742231939429.dkr.ecr.us-east-1.amazonaws.com/test-repo:latest
   post_build:
     commands:
       - echo Pushing the Docker image to Amazon ECR...
-      - docker push 742231939429.dkr.ecr.us-east-1.amazonaws.com/test-repo:${SEMVER_VERSION}
-      - echo Image pushed successfully to Amazon ECR with tag ${SEMVER_VERSION}
+      - docker push 742231939429.dkr.ecr.us-east-1.amazonaws.com/test-repo:latest
+      - echo Image pushed successfully to Amazon ECR 
