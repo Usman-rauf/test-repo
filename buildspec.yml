@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aaws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 742231939429.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - echo Building the Docker image...
+      - export VERSION=$(git describe --tags --abbrev=0 --match 'v*' || git rev-parse --short HEAD)
+      - export SEMVER_VERSION=$(echo ${VERSION} | sed 's/v//')
+      - docker build -t hellotest:${SEMVER_VERSION} ./images
+      - docker tag hellotest:${SEMVER_VERSION} 742231939429.dkr.ecr.us-east-1.amazonaws.com/test-repo:${SEMVER_VERSION}
+  post_build:
+    commands:
+      - echo Pushing the Docker image to Amazon ECR...
+      - docker push 742231939429.dkr.ecr.us-east-1.amazonaws.com/test-repo:${SEMVER_VERSION}
+      - echo Image pushed successfully to Amazon ECR with tag ${SEMVER_VERSION}
