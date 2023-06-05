@@ -24,3 +24,4 @@ phases:
       - docker push 742231939429.dkr.ecr.us-east-1.amazonaws.com/test-repo:$NEW_VERSION
       - docker push 742231939429.dkr.ecr.us-east-1.amazonaws.com/test-repo:latest
       - echo Image pushed successfully to Amazon ECR
+##
