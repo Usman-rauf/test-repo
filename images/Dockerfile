@@ -8,8 +8,6 @@ COPY nginx.conf /etc/nginx/nginx.conf
 WORKDIR /usr/share/nginx/html
 
 # Copy the static HTML files to the container
-COPY index.html .
-
 # Expose port 80 for HTTP traffic
 EXPOSE 80
 
